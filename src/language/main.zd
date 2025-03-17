@@ -1,25 +1,22 @@
-
 main {
-    int x = 2;
-    print(x);
 
-    if (x >= 10 ) {
-        print("IF AQUI");
-    }
-    else if(x == 2) {
-    while(x < 10){
-       x++;
-        if(x == 7) {
-        return;
-        }
-        print(x);
-        }
-    }
-    else {
-        print("ELSE EXECUTADO");
-    }
-print("teste");
-list minhaLista = [1, 2, "abc"];
-print(minhaLista);
+double x;
+double y;
+double z;
+string t;
+while(true){
+input(x);
+input(y);
+input(t);
+if(t == "/") {
+z = x / y;
+print(z);
 }
-
+else if(t == "*"){
+z = x *y;
+print(z);
+}
+else if(t == "sair"){return;}
+}
+print("acabou");
+}

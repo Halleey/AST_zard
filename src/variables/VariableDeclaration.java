@@ -1,5 +1,6 @@
 package variables;
 
+import expressions.BinaryExpression;
 import expressions.Expression;
 import expressions.LiteralExpression;
 import expressions.TypedValue;
@@ -28,22 +29,30 @@ public class VariableDeclaration extends Statement {
         if (value instanceof ListExpression) {
             evaluatedValue = ((ListExpression) value).getElements(); // Retorna a lista já processada
         } else {
-            evaluatedValue = (value != null) ? evaluateExpression(value) : getDefaultValue();
+            evaluatedValue = (value != null) ? evaluateExpression(value, table) : getDefaultValue();
+
         }
 
         table.setVariable(name, new TypedValue(evaluatedValue, type.getValue())); // Define o tipo corretamente
     }
 
 
-    private Object evaluateExpression(Expression expr) {
+    private Object evaluateExpression(Expression expr, VariableTable table) {
         if (expr instanceof LiteralExpression) {
             String value = ((LiteralExpression) expr).token.getValue();
             return convertToType(value, type.getValue()); // Converte para o tipo correto
         } else if (expr instanceof ListExpression) {
             return ((ListExpression) expr).getElements(); // Retorna a lista corretamente
+        } else if (expr instanceof BinaryExpression) {
+            return ((BinaryExpression) expr).evaluate(table).getValue(); // Agora passa a tabela de variáveis corretamente
+        } else if (expr instanceof VariableReference) {
+            return ((VariableReference) expr).evaluate(table).getValue(); // Também adiciona suporte para referências a variáveis
         }
+
         throw new RuntimeException("Erro ao avaliar expressão: tipo desconhecido " + expr.getClass().getSimpleName());
     }
+
+
 
 
 
