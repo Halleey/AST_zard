@@ -32,8 +32,15 @@ public class LiteralExpression extends Expression {
 
     @Override
     public String toString() {
-        return "LiteralExpression{value=" + token.getValue() + "}";
+        String value = token.getValue();
+        Token.TokenType type = token.getType();
+
+        if (type == Token.TokenType.STRING) {
+            return "\"" + value + "\""; // Aspas em strings
+        }
+        return value; // Deixa números e booleanos como estão
     }
+
 }
 
 
