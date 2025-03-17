@@ -4,6 +4,7 @@ import expressions.LiteralExpression;
 import expressions.ParserExpression;
 import ifs.IfParser;
 import inputs.ParserInput;
+import lists.ListExecute;
 import prints.ParserPrintStatement;
 import returns.ReturnStatement;
 import tokens.Token;
@@ -23,7 +24,7 @@ public class Parser {
     private final ParserInput parserInput;
     private final ParseVariable parseVariable;
     private final ParserExpression parseExpression;
-
+    private final ListExecute listExecute;
     public Parser(List<Token> tokens) {
         this.tokens = tokens;
         this.ifParser = new IfParser(this);
@@ -32,6 +33,7 @@ public class Parser {
         this.parserInput  = new ParserInput(this);
         this.parseVariable = new ParseVariable(this);
         this.parseExpression = new ParserExpression(this);
+        this.listExecute = new ListExecute(this);
     }
 
     public List<Statement> parse() {
@@ -73,6 +75,9 @@ public class Parser {
             }
             else if ("while".equals(keyword)) {  // Adiciona suporte ao while
                 return whileParser.parseWhileStatement();
+            }
+            else if("list".equals(keyword)){
+                return listExecute.ParserListStatement();
             }
             return parseVariable.parseVariableDeclaration();
         }

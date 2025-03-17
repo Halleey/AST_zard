@@ -3,6 +3,7 @@ package variables;
 import expressions.Expression;
 import expressions.LiteralExpression;
 import expressions.TypedValue;
+import lists.ListExpression;
 import tokens.Token;
 import variables.exceptions.ExceptionVar;
 
@@ -19,20 +20,31 @@ public class VariableDeclaration extends Statement {
     }
 
     public void execute(VariableTable table) {
-        if(table.hasVariable(name)) {
-             throw new ExceptionVar(name);
+        if (table.hasVariable(name)) {
+            throw new ExceptionVar(name);
         }
-        Object evaluatedValue = (value != null) ? evaluateExpression(value) : getDefaultValue();
+
+        Object evaluatedValue;
+        if (value instanceof ListExpression) {
+            evaluatedValue = ((ListExpression) value).getElements(); // Retorna a lista já processada
+        } else {
+            evaluatedValue = (value != null) ? evaluateExpression(value) : getDefaultValue();
+        }
+
         table.setVariable(name, new TypedValue(evaluatedValue, type.getValue())); // Define o tipo corretamente
     }
+
 
     private Object evaluateExpression(Expression expr) {
         if (expr instanceof LiteralExpression) {
             String value = ((LiteralExpression) expr).token.getValue();
             return convertToType(value, type.getValue()); // Converte para o tipo correto
+        } else if (expr instanceof ListExpression) {
+            return ((ListExpression) expr).getElements(); // Retorna a lista corretamente
         }
-        throw new RuntimeException("Erro ao avaliar expressão.");
+        throw new RuntimeException("Erro ao avaliar expressão: tipo desconhecido " + expr.getClass().getSimpleName());
     }
+
 
 
     private Object convertToType(String value, String type) {
@@ -40,10 +52,12 @@ public class VariableDeclaration extends Statement {
             case "int" -> Integer.parseInt(value);
             case "double" -> Double.parseDouble(value);
             case "bool" -> Boolean.parseBoolean(value);
-            case "string" -> value; // Já está no formato correto
+            case "string" -> value;
+            case "list" -> throw new RuntimeException("Erro: Listas devem ser avaliadas separadamente.");
             default -> throw new RuntimeException("Tipo desconhecido: " + type);
         };
     }
+
 
     private Object getDefaultValue() {
         return switch (type.getValue()) {

@@ -19,14 +19,7 @@ main {
         print("ELSE EXECUTADO");
     }
 print("teste");
-int h = 0;
-while(true) {
-h++;
-if(h == 10) {
-return;
-}
-print(h);
-}
-
+list minhaLista = [1, 2, "abc"];
+print(minhaLista);
 }
 

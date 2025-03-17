@@ -20,9 +20,8 @@ public class ListExpression extends Expression {
         }
         return new TypedValue(list, "list");
     }
-
-    @Override
-    public String toString() {
-        return "ListExpression{" + elements + "}";
+    public List<Expression> getElements() {
+        return elements;
     }
+
 }
