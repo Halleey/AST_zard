@@ -21,7 +21,7 @@ public class WhileStatement extends Statement {
             try {
                 block.execute(table);
             } catch (ReturnException e) {
-                System.out.println("Retorno encontrado dentro do while, encerrando o loop.");
+                System.out.println("Retorno encontrado dentro de um bloco menor, encerrando o loop.");
                 throw e; // Interrompe apenas o loop e propaga o return
             }
         }

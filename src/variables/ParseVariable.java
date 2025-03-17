@@ -1,15 +1,17 @@
 package variables;
 
 import expressions.Expression;
+import expressions.ParserExpression;
 import interpreter.Parser;
 import tokens.Token;
 
 public class ParseVariable {
 
     private final Parser parser;
-
+    private final ParserExpression expression;
     public ParseVariable(Parser parser) {
         this.parser = parser;
+        this.expression = new ParserExpression(parser);
 
     }
     public Statement parseVariableAssignment() {
@@ -26,7 +28,7 @@ public class ParseVariable {
             }
 
             parser.consume(Token.TokenType.OPERATOR);
-            Expression value = parser.parseExpression();
+            Expression value = expression.parseExpression();
             parser.consume(Token.TokenType.DELIMITER);
             return new VariableAssignment(nameToken.getValue(), value);
         }
@@ -47,7 +49,7 @@ public class ParseVariable {
         }
 
         parser.consume(Token.TokenType.OPERATOR);
-        Expression value = parser.parseExpression();
+        Expression value = expression.parseExpression();
         parser.consume(Token.TokenType.DELIMITER);
 
         return new VariableDeclaration(typeToken, nameToken.getValue(), value);

@@ -1,6 +1,7 @@
 package ifs;
 
 import expressions.Expression;
+import expressions.ParserExpression;
 import interpreter.Parser;
 import tokens.Token;
 import variables.Statement;
@@ -10,15 +11,16 @@ import java.util.List;
 
 public class IfParser {
     private final Parser parser;
-
+    private final ParserExpression expression;
     public IfParser(Parser parser) {
         this.parser = parser;
+        this.expression = new ParserExpression(parser);
     }
 
     public Statement parseIfStatement() {
         parser.consume(Token.TokenType.KEYWORD);  // Consome "if"
         parser.consume(Token.TokenType.DELIMITER); // Consome "("
-        Expression condition = parser.parseExpression();  // Parse da condição do if
+        Expression condition = expression.parseExpression();  // Parse da condição do if
         parser.consume(Token.TokenType.DELIMITER); // Consome ")"
         parser.consume(Token.TokenType.DELIMITER); // Consome "{"
 
@@ -38,7 +40,7 @@ public class IfParser {
             if (parser.match(Token.TokenType.KEYWORD) && parser.tokens.get(parser.pos).getValue().equals("if")) {
                 parser.consume(Token.TokenType.KEYWORD);  // Consome "if"
                 parser.consume(Token.TokenType.DELIMITER); // Consome "("
-                Expression elseIfCondition = parser.parseExpression();  // Condição do else if
+                Expression elseIfCondition = expression.parseExpression();  // Condição do else if
                 parser.consume(Token.TokenType.DELIMITER); // Consome ")"
                 parser.consume(Token.TokenType.DELIMITER); // Consome "{"
 

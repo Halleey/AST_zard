@@ -20,9 +20,13 @@ main {
     }
 print("teste");
 int h = 0;
-while(h < 10) {
+while(true) {
 h++;
-print(h);}
+if(h == 10) {
+return;
 }
+print(h);
+}
+
 }
 

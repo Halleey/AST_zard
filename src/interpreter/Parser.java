@@ -1,6 +1,7 @@
 package interpreter;
 import expressions.BinaryExpression;
 import expressions.LiteralExpression;
+import expressions.ParserExpression;
 import ifs.IfParser;
 import inputs.ParserInput;
 import prints.ParserPrintStatement;
@@ -21,7 +22,7 @@ public class Parser {
     private final ParserPrintStatement printStatement;
     private final ParserInput parserInput;
     private final ParseVariable parseVariable;
-
+    private final ParserExpression parseExpression;
 
     public Parser(List<Token> tokens) {
         this.tokens = tokens;
@@ -30,6 +31,7 @@ public class Parser {
         this.printStatement = new ParserPrintStatement(this);
         this.parserInput  = new ParserInput(this);
         this.parseVariable = new ParseVariable(this);
+        this.parseExpression = new ParserExpression(this);
     }
 
     public List<Statement> parse() {
@@ -57,7 +59,7 @@ public class Parser {
                 // Verifica se há um valor de retorno ou se é um retorno vazio
                 Expression returnValue = null;
                 if (!match(Token.TokenType.DELIMITER) || !tokens.get(pos).getValue().equals(";")) {
-                    returnValue = parseExpression(); // Obtém a expressão de retorno
+                    returnValue = parseExpression.parseExpression(); // Obtém a expressão de retorno
                 }
 
                 consume(Token.TokenType.DELIMITER); // Consome o ";"
@@ -79,7 +81,6 @@ public class Parser {
         }
         throw new RuntimeException("Erro de sintaxe: declaração inválida em '" + tokens.get(pos).getValue() + "'");
     }
-
 
 
     public List<Statement> parseBlock() {
@@ -113,7 +114,6 @@ public class Parser {
     }
 
 
-
     public MainBlock parseMainBlock() {
         List<Statement> statements = new ArrayList<>();
         if (!match(Token.TokenType.KEYWORD)) {
@@ -134,44 +134,7 @@ public class Parser {
         return new MainBlock(statements);
     }
 
-    public Expression parseExpression() {
-        Expression left = parsePrimaryExpression();
 
-        while (match(Token.TokenType.OPERATOR)) {
-            Token operator = tokens.get(pos);
-            String op = operator.getValue();
-
-            // Verifica se é um operador de comparação
-            if (op.equals("+") || op.equals("-") || op.equals("*") || op.equals("/") ||
-                    op.equals("==") || op.equals("!=") || op.equals("<") || op.equals("<=") ||
-                    op.equals(">") || op.equals(">=")) {
-
-                consume(Token.TokenType.OPERATOR);  // Consome o operador
-                Expression right = parsePrimaryExpression();  // A próxima expressão para a direita
-                left = new BinaryExpression(left, operator, right);  // Cria a expressão binária
-            } else {
-                break;  // Sai do loop caso não seja um operador válido
-            }
-        }
-
-        return left;
-    }
-
-    private Expression parsePrimaryExpression() {
-        if (match(Token.TokenType.NUMBER)) {
-            return new LiteralExpression(consume(Token.TokenType.NUMBER));
-        }
-        if (match(Token.TokenType.STRING)) {
-            return new LiteralExpression(consume(Token.TokenType.STRING));
-        }
-        if (match(Token.TokenType.BOOLEAN)) {
-            return new LiteralExpression(consume(Token.TokenType.BOOLEAN));
-        }
-        if (match(Token.TokenType.IDENTIFIER)) {
-            return new VariableReference(consume(Token.TokenType.IDENTIFIER).getValue());
-        }
-        throw new RuntimeException("Erro de sintaxe: expressão inesperada em '" + tokens.get(pos).getValue() + "'");
-    }
 
     public Token consume(Token.TokenType expectedType) {
         if (pos < tokens.size() && tokens.get(pos).getType() == expectedType) {
