@@ -22,11 +22,9 @@ public class ListStatement extends Statement {
     public void execute(VariableTable table) {
         TypedValue value = table.getVariable(listName);
 
-        if (!(value.getValue() instanceof ZardList)) {
+        if (!(value.getValue() instanceof ZardList list)) {
             throw new RuntimeException("Erro: " + listName + " não é uma lista.");
         }
-
-        ZardList list = (ZardList) value.getValue();
 
         switch (operation) {
             case "add" -> {

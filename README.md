@@ -48,8 +48,9 @@ Atualmente, a Zard está passando por implementações importantes:
 - [x]**Criação de IF'S** para permitir decições lógicas.
 - [x]**Criação do While** para permitir Loopings.   
 - [x]**Adição do return** para encerrar loopings.
-- []**Refatorando a AST** para permitir melhor análise e otimização do código.
-- []**Implementação de listas dinâmicas** para facilitar manipulação de coleções.
+- [ ]**Refatorando a AST** para permitir melhor análise e otimização do código.
+- [x]**Implementação de listas dinâmicas** para facilitar manipulação de coleções.
+- [ ]**Implementação de funções para lista** para ter controle dos dados.
 
 ## 📂 Uso
 

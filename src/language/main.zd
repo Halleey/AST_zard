@@ -5,9 +5,9 @@ double y;
 double z;
 string t;
 while(true){
+input(t);
 input(x);
 input(y);
-input(t);
 if(t == "/") {
 z = x / y;
 print(z);
@@ -19,4 +19,6 @@ print(z);
 else if(t == "sair"){return;}
 }
 print("acabou");
+list teste = ["hallyson", 18, "developer language"];
+print(teste);
 }
