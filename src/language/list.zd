@@ -1,0 +1,14 @@
+main {
+
+##instantiates a list with direct values
+list teste = ["hallyson", 18, "developer"];
+##method for add element
+teste.add("teste");
+##get element based on index
+teste.get(1);
+##method returns the count of elements present in this list
+teste.size();
+#remove all elements
+teste.clear();
+
+}

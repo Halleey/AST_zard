@@ -1,8 +1,11 @@
 main {
+int x = 10;
 
 list teste = ["hallyson", 18, "developer"];
 teste.add("teste");
 teste.get(1);
+teste.size();
 teste.clear();
+teste.add(x);
 print(teste);
 }
