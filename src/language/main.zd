@@ -3,4 +3,6 @@ main {
 list teste = ["hallyson", 18, "developer"];
 teste.add("teste");
 teste.get(1);
+teste.clear();
+print(teste);
 }

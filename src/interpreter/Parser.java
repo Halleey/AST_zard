@@ -5,6 +5,7 @@ import expressions.ParserExpression;
 import ifs.IfParser;
 import inputs.ParserInput;
 import lists.ListExecute;
+import lists.ListParser;
 import lists.ListStatement;
 import prints.ParserPrintStatement;
 import returns.ReturnStatement;
@@ -26,6 +27,10 @@ public class Parser {
     private final ParseVariable parseVariable;
     public final ParserExpression parseExpression;
     private final ListExecute listExecute;
+    private final ListParser listParser;
+
+
+
     public Parser(List<Token> tokens) {
         this.tokens = tokens;
         this.ifParser = new IfParser(this);
@@ -35,6 +40,8 @@ public class Parser {
         this.parseVariable = new ParseVariable(this);
         this.parseExpression = new ParserExpression(this);
         this.listExecute = new ListExecute(this);
+        this.listParser = new ListParser(this);
+
     }
 
     public List<Statement> parse() {
@@ -84,55 +91,11 @@ public class Parser {
         }
 
         if (match(Token.TokenType.IDENTIFIER)) {
-            return parseIdentifierStatement();
+            return listParser.parseIdentifierStatement();
         }
 
         throw new RuntimeException("Erro de sintaxe: declaração inválida em '" + tokens.get(pos).getValue() + "'");
     }
-
-    private Statement parseIdentifierStatement() {
-        System.out.println(tokens.get(pos).getValue());
-        String varName = consume(Token.TokenType.IDENTIFIER).getValue();
-
-        // Se próximo token for ".", é uma chamada de método
-        if (match(Token.TokenType.DELIMITER) && tokens.get(pos).getValue().equals(".")) {
-            System.out.println(tokens.get(pos).getValue());
-            consume(Token.TokenType.DELIMITER); // Consome "."
-            System.out.println(tokens.get(pos).getValue());
-            String methodName = consume(Token.TokenType.METHODS).getValue();
-            System.out.println(tokens.get(pos).getValue());
-            // Verifica abertura de parênteses
-            if (!match(Token.TokenType.DELIMITER) || !tokens.get(pos).getValue().equals("(")) {
-                throw new RuntimeException("Erro de sintaxe: esperado '(' após nome do método.");
-            }
-            consume(Token.TokenType.DELIMITER); // Consome "("
-
-            List<Expression> arguments = new ArrayList<>();
-            if (!match(Token.TokenType.DELIMITER) || !tokens.get(pos).getValue().equals(")")) {
-                do {
-                    arguments.add(parseExpression.parseExpression());
-                } while (match(Token.TokenType.DELIMITER) && tokens.get(pos).getValue().equals(",") && consume(Token.TokenType.DELIMITER) != null);
-            }
-
-            // Fecha o parêntese ")"
-            if (!match(Token.TokenType.DELIMITER) || !tokens.get(pos).getValue().equals(")")) {
-                throw new RuntimeException("Erro de sintaxe: esperado ')' no fechamento do método.");
-            }
-            consume(Token.TokenType.DELIMITER); // Consome ")"
-
-            // Confere ";"
-            if (!match(Token.TokenType.DELIMITER) || !tokens.get(pos).getValue().equals(";")) {
-                throw new RuntimeException("Erro de sintaxe: esperado ';' após chamada de método.");
-            }
-            consume(Token.TokenType.DELIMITER); // Consome ";"
-
-            return new ListStatement(varName, methodName, arguments);
-        }
-
-        // Caso contrário, tenta interpretar como uma atribuição de variável
-        return parseVariable.parseVariableAssignment();
-    }
-
 
     public List<Statement> parseBlock() {
         List<Statement> statements = new ArrayList<>();
