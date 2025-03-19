@@ -47,6 +47,18 @@ public class ListStatement extends Statement {
                 int index = (int) arguments.get(0).evaluate(table).getValue();
                 System.out.println(list.get(index)); // Apenas imprime o valor por enquanto
             }
+            case "size" -> {
+                if (!arguments.isEmpty()) {
+                    throw new RuntimeException("Erro: size() não recebe argumentos.");
+                }
+                System.out.println(list.size()); // Imprime o tamanho da lista
+            }
+            case "clear" -> {
+                if (!arguments.isEmpty()) {
+                    throw new RuntimeException("Erro: clear() não recebe argumentos.");
+                }
+                list.clear(); // Limpa a lista
+            }
             default -> throw new RuntimeException("Erro: Operação desconhecida em lista: " + operation);
         }
     }

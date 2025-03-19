@@ -23,7 +23,7 @@ public class Parser {
     private final ParserPrintStatement printStatement;
     private final ParserInput parserInput;
     private final ParseVariable parseVariable;
-    private final ParserExpression parseExpression;
+    public final ParserExpression parseExpression;
     private final ListExecute listExecute;
     public Parser(List<Token> tokens) {
         this.tokens = tokens;

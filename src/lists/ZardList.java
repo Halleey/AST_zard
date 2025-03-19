@@ -28,6 +28,10 @@ public class ZardList {
         elements.remove(index);
     }
 
+    public void clear() {
+        elements.clear();
+    }
+
     public int size() {
         return elements.size();
     }
