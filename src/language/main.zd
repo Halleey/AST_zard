@@ -1,11 +1,24 @@
 main {
-int x = 10;
 
-list teste = ["hallyson", 18, "developer"];
-teste.add("teste");
-teste.get(1);
-teste.size();
-teste.clear();
-teste.add(x);
+double x;
+double y;
+double z;
+string t;
+while(true){
+input(t);
+input(x);
+input(y);
+if(t == "/") {
+z = x / y;
+print(z);
+}
+else if(t == "*"){
+z = x *y;
+print(z);
+}
+else if(t == "sair"){return;}
+}
+print("acabou");
+list teste = ["hallyson", 18, "developer language"];
 print(teste);
 }

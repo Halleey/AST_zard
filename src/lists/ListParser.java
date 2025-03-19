@@ -5,6 +5,7 @@ import interpreter.Parser;
 import tokens.Token;
 import variables.ParseVariable;
 import variables.Statement;
+import variables.VariableAssignment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,6 +30,7 @@ public class ListParser {
             System.out.println(parser.tokens.get(parser.pos).getValue());
             String methodName = parser.consume(Token.TokenType.METHODS).getValue();
             System.out.println(parser.tokens.get(parser.pos).getValue());
+
             // Verifica abertura de parênteses
             if (!parser.match(Token.TokenType.DELIMITER) || !parser.tokens.get(parser.pos).getValue().equals("(")) {
                 throw new RuntimeException("Erro de sintaxe: esperado '(' após nome do método.");
@@ -57,8 +59,17 @@ public class ListParser {
             return new ListStatement(varName, methodName, arguments);
         }
 
-        // Caso contrário, tenta interpretar como uma atribuição de variável
-        return parseVariable.parseVariableAssignment();
+        // *Verifica se o próximo token é "=" para processar como atribuição*
+        if (parser.match(Token.TokenType.OPERATOR) && parser.tokens.get(parser.pos).getValue().equals("=")) {
+            parser.consume(Token.TokenType.OPERATOR); // Consome "="
+            Expression value = parser.parseExpression.parseExpression(); // Processa a expressão do lado direito
+            parser.consume(Token.TokenType.DELIMITER); // Confere se há ";"
+
+            return new VariableAssignment(varName, value);
+        }
+
+        // Se não for método nem atribuição, lança erro
+        throw new RuntimeException("Erro de sintaxe: esperado '=' ou chamada de método após identificador '" + varName + "'");
     }
 
 }

@@ -97,6 +97,10 @@ public class Parser {
         throw new RuntimeException("Erro de sintaxe: declaração inválida em '" + tokens.get(pos).getValue() + "'");
     }
 
+
+
+
+
     public List<Statement> parseBlock() {
         List<Statement> statements = new ArrayList<>();
         boolean foundReturn = false; // Flag para detectar um return
