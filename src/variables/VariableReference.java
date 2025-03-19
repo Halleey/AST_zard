@@ -14,5 +14,13 @@ public class VariableReference extends Expression {
     public TypedValue evaluate(VariableTable table) {
         return table.getVariable(name); // Já retorna um TypedValue armazenado na tabela
     }
+
+
+    @Override
+    public String toString() {
+        return "VariableReference{" +
+                "name  '" + name + '\'' +
+                '}';
+    }
 }
 

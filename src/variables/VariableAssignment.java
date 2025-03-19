@@ -72,6 +72,6 @@ public class VariableAssignment extends Statement {
 
     @Override
     public String toString() {
-        return "VariableAssignment{name='" + name + "', value=" + value + "}";
+        return "VariableAssignment{name '" + name + "', value  " + value + "}";
     }
 }

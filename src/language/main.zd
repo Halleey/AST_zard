@@ -1,37 +1,10 @@
 main {
+int z = 5;
+double t = 2.3;
+string texto = "zard";
+bool  isReal = true;
 
-double x;
-double y;
-double z;
-string t;
-while(true){
-input(t);
-input(x);
-input(y);
-if(t == "/") {
-z = x / y;
-print(z);
-}
-else if(t == "*"){
-z = x *y;
-print(z);
-}
-else if(t == "+"){
-z = x +y;
-print(z);
-}
+list teste = ["hallyson", 18, "developer"];
 
-else if(t == "-"){
-z = x -y;
-print(z);
-}
-else if(t == "sair"){return;
-}
-else{
-print("Argumento invalido");
-return;}
-}
-print("acabou");
-list teste = ["hallyson", 18, "developer language"];
-print(teste);
+teste.add("teste");
 }
