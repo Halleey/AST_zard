@@ -1,5 +1,6 @@
 main {
 
-list teste = ["hallyson", 18, "developer language"];
-
+list teste = ["hallyson", 18, "developer"];
+teste.add("teste");
+teste.get(1);
 }

@@ -5,6 +5,7 @@ import expressions.ParserExpression;
 import ifs.IfParser;
 import inputs.ParserInput;
 import lists.ListExecute;
+import lists.ListStatement;
 import prints.ParserPrintStatement;
 import returns.ReturnStatement;
 import tokens.Token;
@@ -55,36 +56,81 @@ public class Parser {
             if ("print".equals(keyword)) {
                 return printStatement.parsePrintStatement();
             }
-            else if (match(Token.TokenType.KEYWORD) && tokens.get(pos).getValue().equals("return")) {
-                pos++; // Avança após o "return"
-
-                // Verifica se há um valor de retorno ou se é um retorno vazio
+            else if ("return".equals(keyword)) {
+                pos++; // Avança após "return"
                 Expression returnValue = null;
+
                 if (!match(Token.TokenType.DELIMITER) || !tokens.get(pos).getValue().equals(";")) {
-                    returnValue = parseExpression.parseExpression(); // Obtém a expressão de retorno
+                    returnValue = parseExpression.parseExpression();
                 }
 
-                consume(Token.TokenType.DELIMITER); // Consome o ";"
+                consume(Token.TokenType.DELIMITER); // Consome ";"
                 return new ReturnStatement(returnValue);
             }
-
             else if ("input".equals(keyword)) {
                 return parserInput.parseInputStatement();
-            } else if ("if".equals(keyword)) {
-                return ifParser.parseIfStatement();  // Novo método para o 'if'
             }
-            else if ("while".equals(keyword)) {  // Adiciona suporte ao while
+            else if ("if".equals(keyword)) {
+                return ifParser.parseIfStatement();
+            }
+            else if ("while".equals(keyword)) {
                 return whileParser.parseWhileStatement();
             }
-            else if("list".equals(keyword)){
+            else if ("list".equals(keyword)) {
                 return listExecute.ParserListStatement();
             }
+
             return parseVariable.parseVariableDeclaration();
         }
+
         if (match(Token.TokenType.IDENTIFIER)) {
-            return parseVariable.parseVariableAssignment();
+            return parseIdentifierStatement();
         }
+
         throw new RuntimeException("Erro de sintaxe: declaração inválida em '" + tokens.get(pos).getValue() + "'");
+    }
+
+    private Statement parseIdentifierStatement() {
+        System.out.println(tokens.get(pos).getValue());
+        String varName = consume(Token.TokenType.IDENTIFIER).getValue();
+
+        // Se próximo token for ".", é uma chamada de método
+        if (match(Token.TokenType.DELIMITER) && tokens.get(pos).getValue().equals(".")) {
+            System.out.println(tokens.get(pos).getValue());
+            consume(Token.TokenType.DELIMITER); // Consome "."
+            System.out.println(tokens.get(pos).getValue());
+            String methodName = consume(Token.TokenType.METHODS).getValue();
+            System.out.println(tokens.get(pos).getValue());
+            // Verifica abertura de parênteses
+            if (!match(Token.TokenType.DELIMITER) || !tokens.get(pos).getValue().equals("(")) {
+                throw new RuntimeException("Erro de sintaxe: esperado '(' após nome do método.");
+            }
+            consume(Token.TokenType.DELIMITER); // Consome "("
+
+            List<Expression> arguments = new ArrayList<>();
+            if (!match(Token.TokenType.DELIMITER) || !tokens.get(pos).getValue().equals(")")) {
+                do {
+                    arguments.add(parseExpression.parseExpression());
+                } while (match(Token.TokenType.DELIMITER) && tokens.get(pos).getValue().equals(",") && consume(Token.TokenType.DELIMITER) != null);
+            }
+
+            // Fecha o parêntese ")"
+            if (!match(Token.TokenType.DELIMITER) || !tokens.get(pos).getValue().equals(")")) {
+                throw new RuntimeException("Erro de sintaxe: esperado ')' no fechamento do método.");
+            }
+            consume(Token.TokenType.DELIMITER); // Consome ")"
+
+            // Confere ";"
+            if (!match(Token.TokenType.DELIMITER) || !tokens.get(pos).getValue().equals(";")) {
+                throw new RuntimeException("Erro de sintaxe: esperado ';' após chamada de método.");
+            }
+            consume(Token.TokenType.DELIMITER); // Consome ";"
+
+            return new ListStatement(varName, methodName, arguments);
+        }
+
+        // Caso contrário, tenta interpretar como uma atribuição de variável
+        return parseVariable.parseVariableAssignment();
     }
 
 
@@ -138,8 +184,6 @@ public class Parser {
 
         return new MainBlock(statements);
     }
-
-
 
     public Token consume(Token.TokenType expectedType) {
         if (pos < tokens.size() && tokens.get(pos).getType() == expectedType) {

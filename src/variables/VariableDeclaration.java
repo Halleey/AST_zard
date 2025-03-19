@@ -5,8 +5,11 @@ import expressions.Expression;
 import expressions.LiteralExpression;
 import expressions.TypedValue;
 import lists.ListExpression;
+import lists.ZardList;
 import tokens.Token;
 import variables.exceptions.ExceptionVar;
+
+import java.util.List;
 
 
 public class VariableDeclaration extends Statement {
@@ -26,15 +29,20 @@ public class VariableDeclaration extends Statement {
         }
 
         Object evaluatedValue;
-        if (value instanceof ListExpression) {
-            evaluatedValue = ((ListExpression) value).getElements(); // Retorna a lista já processada
+        if (value instanceof ListExpression listExpr) {
+            List<Object> evaluatedElements = listExpr.getElements().stream()
+                    .map(expr -> expr.evaluate(table).getValue()) // Avalia os elementos antes de criar a ZardList
+                    .toList();
+            evaluatedValue = new ZardList(evaluatedElements); // Agora funciona corretamente
         } else {
             evaluatedValue = (value != null) ? evaluateExpression(value, table) : getDefaultValue();
-
         }
 
-        table.setVariable(name, new TypedValue(evaluatedValue, type.getValue())); // Define o tipo corretamente
+        table.setVariable(name, new TypedValue(evaluatedValue, type.getValue()));
     }
+
+
+
 
 
     private Object evaluateExpression(Expression expr, VariableTable table) {

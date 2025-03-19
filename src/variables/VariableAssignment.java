@@ -2,6 +2,10 @@ package variables;
 
 import expressions.Expression;
 import expressions.TypedValue;
+import lists.ZardList;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class VariableAssignment extends Statement {
     public final String name;
@@ -20,12 +24,19 @@ public class VariableAssignment extends Statement {
         TypedValue evaluatedValue = value.evaluate(table);
         TypedValue oldValue = table.getVariable(name);
 
-
         // Converter o valor para o tipo da variável
         Object convertedValue = convertToType(evaluatedValue.getValue(), oldValue.getType());
 
+        // Garantir que listas sejam convertidas para ZardList
+        if (convertedValue instanceof List<?>) {
+            List<Object> tempList = new ArrayList<>((List<?>) convertedValue);
+            convertedValue = new ZardList(tempList);
+        }
+
+
         table.setVariable(name, new TypedValue(convertedValue, oldValue.getType()));
     }
+
 
     private Object convertToType(Object value, String type) {
         if (value instanceof TypedValue) {
