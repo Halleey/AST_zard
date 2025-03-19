@@ -26,4 +26,12 @@ public class WhileStatement extends Statement {
             }
         }
     }
+
+    @Override
+    public String toString() {
+        return "WhileStatement:\n" +
+                "  Condition: " + condition + "\n" +
+                "  " + block;
+    }
+
 }

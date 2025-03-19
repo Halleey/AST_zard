@@ -1,3 +1,8 @@
 package ast;
 
-public abstract class ASTNode {}
+public abstract class ASTNode {
+    @Override
+    public String toString() {
+        return super.toString();
+    }
+}

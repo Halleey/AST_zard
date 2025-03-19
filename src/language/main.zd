@@ -16,7 +16,20 @@ else if(t == "*"){
 z = x *y;
 print(z);
 }
-else if(t == "sair"){return;}
+else if(t == "+"){
+z = x +y;
+print(z);
+}
+
+else if(t == "-"){
+z = x -y;
+print(z);
+}
+else if(t == "sair"){return;
+}
+else{
+print("Argumento invalido");
+return;}
 }
 print("acabou");
 list teste = ["hallyson", 18, "developer language"];

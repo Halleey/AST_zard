@@ -42,9 +42,6 @@ public class VariableDeclaration extends Statement {
     }
 
 
-
-
-
     private Object evaluateExpression(Expression expr, VariableTable table) {
         if (expr instanceof LiteralExpression) {
             String value = ((LiteralExpression) expr).token.getValue();

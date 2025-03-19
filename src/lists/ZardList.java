@@ -39,5 +39,6 @@ public class ZardList {
     public void clear() {
         elements.clear();
     }
+
 }
 

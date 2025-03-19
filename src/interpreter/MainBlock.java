@@ -23,6 +23,17 @@ public class MainBlock extends ASTNode {
             }
         }
     }
+    @Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+        builder.append("MainBlock:\n");
+        for (Statement stmt : statements) {
+            builder.append("  ").append(stmt.toString().replace("\n", "\n  ")).append("\n");
+        }
+        return builder.toString();
+    }
+
+
 }
 
 

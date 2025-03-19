@@ -20,4 +20,10 @@ public class ConditionBlock {
     public Block getBlock() {
         return block;
     }
+
+
+    @Override
+    public String toString() {
+        return "Condition: " + condition + "\n  " + block;
+    }
 }

@@ -22,7 +22,6 @@ public class IfStatement extends Statement {
 
         for (ConditionBlock block : conditionBlocks) {
             TypedValue evaluatedValue = block.getCondition().evaluate(table);
-            System.out.println("Condição avaliada: " + evaluatedValue);
 
             if (evaluatedValue.isTruthy()) {
                 System.out.println("Executando bloco do if...");
@@ -46,6 +45,14 @@ public class IfStatement extends Statement {
         } else if (!algumIfExecutou) {
             System.out.println("Nenhuma condição foi verdadeira e não há bloco else definido.");
         }
+    }
+
+    @Override
+    public String toString() {
+        return "IfStatement{" +
+                "conditionBlocks=" + conditionBlocks +
+                ", elseBlock=" + elseBlock +
+                '}';
     }
 }
 

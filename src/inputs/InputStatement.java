@@ -41,4 +41,13 @@ public class InputStatement extends Statement {
     public String getVariableName() {
         return variableName;
     }
+
+    @Override
+    public String toString() {
+        return "InputStatement{" +
+                "variableName='" + variableName + '\'' +
+                '}';
+    }
+
+
 }

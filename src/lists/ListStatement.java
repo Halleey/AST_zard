@@ -28,6 +28,7 @@ public class ListStatement extends Statement {
 
         switch (operation) {
             case "add" -> {
+                System.out.println("foi ativado .add");
                 if (arguments.size() != 1) {
                     throw new RuntimeException("Erro: add() espera um único argumento.");
                 }

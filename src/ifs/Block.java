@@ -24,4 +24,13 @@ public class Block {
             }
         }
     }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder("Block:\n");
+        for (Statement stmt : statements) {
+            sb.append("  ").append(stmt).append("\n");
+        }
+        return sb.toString();
+    }
 }

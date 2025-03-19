@@ -17,4 +17,11 @@ public class PrintStatement extends Statement {
         TypedValue value = expression.evaluate(table);
         System.out.println(value.getValue()); // Agora imprime corretamente com concatenação
     }
+
+    @Override
+    public String toString() {
+        return "PrintStatement{" +
+                "expression " + expression +
+                '}';
+    }
 }

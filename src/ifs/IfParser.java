@@ -12,6 +12,9 @@ import java.util.List;
 public class IfParser {
     private final Parser parser;
     private final ParserExpression expression;
+    private Block elseBlock = null;
+    private List<ConditionBlock> conditionBlocks = new ArrayList<>();
+
     public IfParser(Parser parser) {
         this.parser = parser;
         this.expression = new ParserExpression(parser);
@@ -28,10 +31,9 @@ public class IfParser {
         List<Statement> ifStatements = parser.parseBlock();
         Block ifBlock = new Block(ifStatements);
 
-        List<ConditionBlock> conditionBlocks = new ArrayList<>();
         conditionBlocks.add(new ConditionBlock(condition, ifBlock));
 
-        Block elseBlock = null;
+
 
         while (parser.match(Token.TokenType.KEYWORD) && parser.tokens.get(parser.pos).getValue().equals("else")) {
             parser.consume(Token.TokenType.KEYWORD); // Consome "else"
@@ -63,5 +65,19 @@ public class IfParser {
         return new IfStatement(conditionBlocks, elseBlock);
     }
 
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder("IfStatement:\n");
+
+        for (ConditionBlock conditionBlock : conditionBlocks) {
+            sb.append("  ").append(conditionBlock).append("\n");
+        }
+
+        if (elseBlock != null) {
+            sb.append("  Else:\n  ").append(elseBlock).append("\n");
+        }
+
+        return sb.toString();
+    }
 
 }
