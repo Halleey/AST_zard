@@ -5,4 +5,7 @@ bool isReal = true;
 string texto =  "zard";
 
 print(texto);
+print(isReal);
+print(a);
+print(b);
 }

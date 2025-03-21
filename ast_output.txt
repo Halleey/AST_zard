@@ -4,3 +4,6 @@ MainBlock:
   VariableDeclaration{name='isReal', type='bool', value=true}
   VariableDeclaration{name='texto', type='string', value="zard"}
   PrintStatement{expression VariableReference{name  'texto'}}
+  PrintStatement{expression VariableReference{name  'isReal'}}
+  PrintStatement{expression VariableReference{name  'a'}}
+  PrintStatement{expression VariableReference{name  'b'}}
