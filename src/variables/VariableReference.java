@@ -22,5 +22,9 @@ public class VariableReference extends Expression {
                 "name  '" + name + '\'' +
                 '}';
     }
+
+    public String getName() {
+        return name;
+    }
 }
 

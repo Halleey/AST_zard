@@ -27,6 +27,16 @@ public class WhileStatement extends Statement {
         }
     }
 
+    // Getter para acessar a condição do while
+    public Expression getCondition() {
+        return condition;
+    }
+
+    // Getter para acessar o corpo do while
+    public Block getBody() {
+        return block;
+    }
+
     @Override
     public String toString() {
         return "WhileStatement:\n" +

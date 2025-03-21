@@ -1,10 +1,8 @@
 main {
-int z = 5;
-double t = 2.3;
-string texto = "zard";
-bool  isReal = true;
+int a = 15;
+double b = 3.14;
+bool isReal = true;
+string texto =  "zard";
 
-list teste = ["hallyson", 18, "developer"];
-
-teste.add("teste");
+print(texto);
 }

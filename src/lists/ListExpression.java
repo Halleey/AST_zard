@@ -24,4 +24,11 @@ public class ListExpression extends Expression {
         return elements;
     }
 
+
+    @Override
+    public String toString() {
+        return "ListExpression{" +
+                "\n" + elements +
+                '}';
+    }
 }

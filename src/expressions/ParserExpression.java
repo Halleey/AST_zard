@@ -52,4 +52,12 @@ public class ParserExpression {
         }
         throw new RuntimeException("Erro de sintaxe: expressão inesperada em '" + parser.tokens.get(parser.pos).getValue() + "'");
     }
+
+
+    @Override
+    public String toString() {
+        return "ParserExpression{" +
+                "parser  " + parser +
+                '}';
+    }
 }

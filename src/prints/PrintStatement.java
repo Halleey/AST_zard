@@ -18,6 +18,10 @@ public class PrintStatement extends Statement {
         System.out.println(value.getValue()); // Agora imprime corretamente com concatenação
     }
 
+    public Expression getExpression() {
+        return expression;
+    }
+
     @Override
     public String toString() {
         return "PrintStatement{" +

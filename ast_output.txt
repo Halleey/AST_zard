@@ -1,0 +1,6 @@
+MainBlock:
+  VariableDeclaration{name='a', type='int', value=15}
+  VariableDeclaration{name='b', type='double', value=3.14}
+  VariableDeclaration{name='isReal', type='bool', value=true}
+  VariableDeclaration{name='texto', type='string', value="zard"}
+  PrintStatement{expression VariableReference{name  'texto'}}

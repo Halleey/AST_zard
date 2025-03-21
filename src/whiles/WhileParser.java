@@ -18,11 +18,11 @@ public class WhileParser {
     }
 
     public Statement parseWhileStatement() {
-        parser.consume(Token.TokenType.KEYWORD);  // Consome "while"
-        parser.consume(Token.TokenType.DELIMITER); // Consome "("
-        Expression condition = expression.parseExpression();  // Obtém a condição
-        parser.consume(Token.TokenType.DELIMITER); // Consome ")"
-        parser.consume(Token.TokenType.DELIMITER); // Consome "{"
+        parser.consume(Token.TokenType.KEYWORD);
+        parser.consume(Token.TokenType.DELIMITER);
+        Expression condition = expression.parseExpression();
+        parser.consume(Token.TokenType.DELIMITER);
+        parser.consume(Token.TokenType.DELIMITER);
 
         // Obtém os comandos dentro do bloco while
         List<Statement> statements = parser.parseBlock();

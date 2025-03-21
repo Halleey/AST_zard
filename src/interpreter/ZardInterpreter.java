@@ -1,13 +1,12 @@
 package interpreter;
+import llvms.LLVMGenerator;
 import tokens.Lexer;
 import tokens.Token;
-import variables.Statement;
-import variables.VariableTable;
-
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
+
 
 public class ZardInterpreter {
     public static void main(String[] args) {
@@ -27,15 +26,18 @@ public class ZardInterpreter {
             System.out.println("AST Gerada:");
             System.out.println(mainBlock);
 
-            // Criar tabela de variáveis
-            VariableTable variableTable = new VariableTable();
+            // Gerar uma saída de TEXTO para a AST
+            Files.write(Paths.get("ast_output.txt"), mainBlock.toString().getBytes());
 
-            // Executar apenas o bloco `main`
-            mainBlock.execute(variableTable);
+            // Geração do código LLVM
+            LLVMGenerator llvmGenerator = new LLVMGenerator();
+            llvmGenerator.generate(mainBlock);
 
-            // Exibir estado final da tabela de variáveis
-            System.out.println("\nEstado final das variáveis:");
-            System.out.println(variableTable);
+            // Salvar o código LLVM em um arquivo
+            String llvmOutputPath = "output.ll";
+            Files.write(Paths.get(llvmOutputPath), llvmGenerator.getLLVMCode().getBytes());
+
+            System.out.println("Código LLVM gerado e salvo em: " + llvmOutputPath);
 
         } catch (IOException e) {
             System.out.println("Erro ao ler o arquivo: " + e.getMessage());
@@ -45,3 +47,4 @@ public class ZardInterpreter {
         }
     }
 }
+

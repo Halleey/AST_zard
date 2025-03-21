@@ -14,6 +14,11 @@ public class MainBlock extends ASTNode {
         this.statements = statements;
     }
 
+
+    public List<Statement> getStatements() {
+        return statements;
+    }
+
     public void execute(VariableTable table) {
         for (Statement stmt : statements) {
             try {

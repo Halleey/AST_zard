@@ -58,9 +58,6 @@ public class VariableDeclaration extends Statement {
     }
 
 
-
-
-
     private Object convertToType(String value, String type) {
         return switch (type) {
             case "int" -> Integer.parseInt(value);
@@ -81,6 +78,18 @@ public class VariableDeclaration extends Statement {
             case "bool" -> false;
             default -> null; // Outros tipos podem ser nulos
         };
+    }
+
+    public Token getType() {
+        return type;
+    }
+
+    public Expression getValue() {
+        return value;
+    }
+
+    public String getName() {
+        return name;
     }
 
     @Override
