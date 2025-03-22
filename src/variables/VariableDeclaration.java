@@ -17,6 +17,8 @@ public class VariableDeclaration extends Statement {
     private final String name;
     private final Expression value;
 
+
+
     public VariableDeclaration(Token type, String name, Expression value) {
         this.type = type;
         this.name = name;
@@ -28,17 +30,23 @@ public class VariableDeclaration extends Statement {
             throw new ExceptionVar(name);
         }
 
-        Object evaluatedValue;
-        if (value instanceof ListExpression listExpr) {
-            List<Object> evaluatedElements = listExpr.getElements().stream()
-                    .map(expr -> expr.evaluate(table).getValue()) // Avalia os elementos antes de criar a ZardList
-                    .toList();
-            evaluatedValue = new ZardList(evaluatedElements); // Agora funciona corretamente
-        } else {
-            evaluatedValue = (value != null) ? evaluateExpression(value, table) : getDefaultValue();
-        }
+        Object evaluatedValue = (value != null) ? evaluateExpressionWithListSupport(value, table) : getDefaultValue();
 
         table.setVariable(name, new TypedValue(evaluatedValue, type.getValue()));
+    }
+
+    private Object evaluateExpressionWithListSupport(Expression value, VariableTable table) {
+        if (value instanceof ListExpression listExpr) {
+            return createZardList(listExpr, table);
+        }
+        return evaluateExpression(value, table);
+    }
+
+    private ZardList createZardList(ListExpression listExpr, VariableTable table) {
+        List<Object> evaluatedElements = listExpr.getElements().stream()
+                .map(expr -> expr.evaluate(table).getValue()) // Avalia cada elemento antes de criar a lista
+                .toList();
+        return new ZardList(evaluatedElements);
     }
 
 
@@ -49,9 +57,9 @@ public class VariableDeclaration extends Statement {
         } else if (expr instanceof ListExpression) {
             return ((ListExpression) expr).getElements(); // Retorna a lista corretamente
         } else if (expr instanceof BinaryExpression) {
-            return ((BinaryExpression) expr).evaluate(table).getValue(); // Agora passa a tabela de variáveis corretamente
+            return expr.evaluate(table).getValue(); // Agora passa a tabela de variáveis corretamente
         } else if (expr instanceof VariableReference) {
-            return ((VariableReference) expr).evaluate(table).getValue(); // Também adiciona suporte para referências a variáveis
+            return expr.evaluate(table).getValue(); // Também adiciona suporte para referências a variáveis
         }
 
         throw new RuntimeException("Erro ao avaliar expressão: tipo desconhecido " + expr.getClass().getSimpleName());
