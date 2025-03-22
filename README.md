@@ -37,7 +37,7 @@ main {
 A linguagem continuará recebendo melhorias para tornar-se mais robusta e versátil. Algumas das metas incluem:
 
 - 📌 **Suporte a Funções** (declaração e chamada de funções).
-- 📚 **Tipos de Dados Avançados** (listas e mapas dinâmicos).
+- 📚 **Tipos de Dados Avançados** (**ex:** listas e mapas dinâmicos).
 - 🔧 **Sistema de Módulos e Importação de Código**.
 - 🛠 **Compilação para LLVM IR** para execução independente.
 - 🏗 **Criação de um compilador** para alcançar o sonhado Bootstrapping .

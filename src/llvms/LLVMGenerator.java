@@ -9,7 +9,6 @@ import variables.Statement;
 import variables.VariableDeclaration;
 import variables.VariableReference;
 import variables.VariableTable;
-
 public class LLVMGenerator {
     private StringBuilder llvmCode;
     private StringBuilder globalDeclarations;
@@ -51,7 +50,7 @@ public class LLVMGenerator {
                     .append(" = private unnamed_addr constant [")
                     .append(strValue.length() + 1)
                     .append(" x i8] c\"")
-                    .append(strValue.replace("\"", "\\22"))
+                    .append(strValue.replace("\"", "\\22")) // Corrige aspas
                     .append("\\00\", align 1\n");
 
             llvmCode.append(varName).append(" = alloca i8*\n");
@@ -75,6 +74,7 @@ public class LLVMGenerator {
                     .append(", ").append(llvmType).append("* ").append(varName).append("\n");
         }
     }
+
     private void generatePrintStatement(PrintStatement stmt) {
         Expression expr = stmt.getExpression();
         String varName;
@@ -116,21 +116,15 @@ public class LLVMGenerator {
                     .append(" = load ").append(type).append(", ").append(type)
                     .append("* ").append(varName).append("\n");
         } else {
-            // Se for string, precisamos de getelementptr para pegar o endereço correto
-            String strPtr = "%strptr_" + tempVarCount++;
-            llvmCode.append("    ").append(strPtr)
-                    .append(" = getelementptr inbounds [").append(varName.length() - 3)
-                    .append(" x i8], [").append(varName.length() - 3).append(" x i8]* ")
-                    .append(varName).append(", i32 0, i32 0\n");
-            printVar = strPtr;
+            // Corrigindo strings para obter o ponteiro corretamente
+            llvmCode.append("    ").append(printVar)
+                    .append(" = load i8*, i8** ").append(varName).append("\n");
         }
 
         switch (type) {
             case "i8*" -> formatPtr = "@.str_s";
             case "i32" -> formatPtr = "@.str_d";
-            case "double" -> {
-                formatPtr = "@.str_f";
-            }
+            case "double" -> formatPtr = "@.str_f";
             case "i1" -> {
                 String boolInt = "%bool_" + tempVarCount++;
                 llvmCode.append("    ").append(boolInt).append(" = zext i1 ").append(printVar).append(" to i32\n");
@@ -143,7 +137,6 @@ public class LLVMGenerator {
         llvmCode.append("    call i32 (i8*, ...) @printf(i8* ")
                 .append(formatPtr).append(", ").append(type.equals("i1") ? "i32" : type).append(" ").append(printVar).append(")\n");
     }
-
 
     private String getLLVMType(String type) {
         return switch (type) {

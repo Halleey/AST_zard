@@ -15,14 +15,14 @@ store i1 true, i1* %isReal
 %texto = alloca i8*
 %ptr_texto = getelementptr inbounds [7 x i8], [7 x i8]* @str_texto, i32 0, i32 0
 store i8* %ptr_texto, i8** %texto
-    %t0 = load i8*, i8** %texto
-    call i32 (i8*, ...) @printf(i8* @.str_s, i8* %t0)
-    %t1 = load i1, i1* %isReal
-    %bool_2 = zext i1 %t1 to i32
-    call i32 (i8*, ...) @printf(i8* @.str_d, i32 %bool_2)
-    %t3 = load i32, i32* %a
-    call i32 (i8*, ...) @printf(i8* @.str_d, i32 %t3)
-    %t4 = load double, double* %b
-    call i32 (i8*, ...) @printf(i8* @.str_f, double %t4)
+    %strptr_1 = getelementptr inbounds [3 x i8], [3 x i8]* %texto, i32 0, i32 0
+    call i32 (i8*, ...) @printf(i8* @.str_s, i8* %strptr_1)
+    %t2 = load i1, i1* %isReal
+    %bool_3 = zext i1 %t2 to i32
+    call i32 (i8*, ...) @printf(i8* @.str_d, i32 %bool_3)
+    %t4 = load i32, i32* %a
+    call i32 (i8*, ...) @printf(i8* @.str_d, i32 %t4)
+    %t5 = load double, double* %b
+    call i32 (i8*, ...) @printf(i8* @.str_f, double %t5)
     ret i32 0
 }
