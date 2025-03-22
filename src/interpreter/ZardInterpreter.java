@@ -35,16 +35,16 @@ public class ZardInterpreter {
             //Para executar o código da AST
             mainBlock.execute(variableTable);
 
-            // Geração do código LLVM
-//            LLVMGenerator llvmGenerator = new LLVMGenerator(variableTable);
-//            llvmGenerator.generate(mainBlock);
-//            llvmGenerator.finalizeCode();
-//            System.out.println(llvmGenerator.getLLVMCode());
-//            // Salvar o código LLVM em um arquivo
-//            String llvmOutputPath = "output.ll";
-//            Files.write(Paths.get(llvmOutputPath), llvmGenerator.getLLVMCode().getBytes());
-//
-//            System.out.println("Código LLVM gerado e salvo em: " + llvmOutputPath);
+         //    Geração do código LLVM
+            LLVMGenerator llvmGenerator = new LLVMGenerator(variableTable);
+            llvmGenerator.generate(mainBlock);
+            llvmGenerator.finalizeCode();
+            System.out.println(llvmGenerator.getLLVMCode());
+            // Salvar o código LLVM em um arquivo
+            String llvmOutputPath = "output.ll";
+            Files.write(Paths.get(llvmOutputPath), llvmGenerator.getLLVMCode().getBytes());
+
+            System.out.println("Código LLVM gerado e salvo em: " + llvmOutputPath);
 
         } catch (IOException e) {
             System.out.println("Erro ao ler o arquivo: " + e.getMessage());

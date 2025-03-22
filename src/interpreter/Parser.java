@@ -1,12 +1,10 @@
 package interpreter;
-import expressions.BinaryExpression;
-import expressions.LiteralExpression;
 import expressions.ParserExpression;
 import ifs.IfParser;
 import inputs.ParserInput;
 import lists.ListExecute;
 import lists.ListParser;
-import lists.ListStatement;
+import maps.MapExecute;
 import prints.ParserPrintStatement;
 import returns.ReturnStatement;
 import tokens.Token;
@@ -28,7 +26,7 @@ public class Parser {
     public final ParserExpression parseExpression;
     private final ListExecute listExecute;
     private final ListParser listParser;
-
+    private final MapExecute mapExecute;
 
 
     public Parser(List<Token> tokens) {
@@ -41,7 +39,7 @@ public class Parser {
         this.parseExpression = new ParserExpression(this);
         this.listExecute = new ListExecute(this);
         this.listParser = new ListParser(this);
-
+        this.mapExecute = new MapExecute(this);
     }
 
     public List<Statement> parse() {
@@ -85,6 +83,9 @@ public class Parser {
             }
             else if ("list".equals(keyword)) {
                 return listExecute.ParserListStatement();
+            }
+            else if ("map".equals(keyword)) {  // Aqui, adicionamos o caso para o mapa
+                return mapExecute.ParserMapStatement();  // Usamos o MapParser
             }
 
             return parseVariable.parseVariableDeclaration();

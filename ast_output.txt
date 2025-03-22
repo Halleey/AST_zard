@@ -1,7 +1,9 @@
 MainBlock:
-  VariableDeclaration{name='teste', type='list', value=ListExpression{
-  ["hallyson", 18, "developer"]}}
-  ListStatement{listName='teste', operation='add', arguments=["teste"]}
-  ListStatement{listName='teste', operation='get', arguments=[1]}
-  ListStatement{listName='teste', operation='size', arguments=[]}
-  ListStatement{listName='teste', operation='clear', arguments=[]}
+  VariableDeclaration{name='a', type='int', value=15}
+  VariableDeclaration{name='b', type='double', value=3.14}
+  VariableDeclaration{name='isReal', type='bool', value=true}
+  VariableDeclaration{name='texto', type='string', value="zard"}
+  PrintStatement{expression VariableReference{name  'texto'}}
+  PrintStatement{expression VariableReference{name  'isReal'}}
+  PrintStatement{expression VariableReference{name  'a'}}
+  PrintStatement{expression VariableReference{name  'b'}}
