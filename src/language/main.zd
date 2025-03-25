@@ -1,6 +1,13 @@
 main {
-int x = 15;
-int z;
-z = 10;
-map mapa = {"index":"zero"};
+
+list teste = ["hallyson", 18, "developer"];
+
+teste.add("teste");
+
+teste.get(1);
+
+teste.size();
+
+teste.clear();
+
 }

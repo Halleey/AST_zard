@@ -22,7 +22,7 @@ public class ZardInterpreter {
             List<Token> tokens = lexer.tokenize();
 
             // Construir AST
-            Parser parser = new Parser(tokens, variableTable);
+            Parser parser = new Parser(tokens);
             MainBlock mainBlock = parser.parseMainBlock(); // Agora analisamos um MainBlock
 
             // Debug: Exibir a AST gerada
@@ -35,7 +35,7 @@ public class ZardInterpreter {
             //Para executar o código da AST
             mainBlock.execute(variableTable);
 
-         //    Geração do código LLVM
+            // Geração do código LLVM
 //            LLVMGenerator llvmGenerator = new LLVMGenerator(variableTable);
 //            llvmGenerator.generate(mainBlock);
 //            llvmGenerator.finalizeCode();

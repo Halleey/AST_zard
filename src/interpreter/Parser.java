@@ -1,10 +1,12 @@
 package interpreter;
+import expressions.BinaryExpression;
+import expressions.LiteralExpression;
 import expressions.ParserExpression;
 import ifs.IfParser;
 import inputs.ParserInput;
 import lists.ListExecute;
 import lists.ListParser;
-import maps.MapExecute;
+import lists.ListStatement;
 import prints.ParserPrintStatement;
 import returns.ReturnStatement;
 import tokens.Token;
@@ -26,10 +28,10 @@ public class Parser {
     public final ParserExpression parseExpression;
     private final ListExecute listExecute;
     private final ListParser listParser;
-    private final MapExecute mapExecute;
-    private final VariableTable table;
 
-    public Parser(List<Token> tokens, VariableTable table) {
+
+
+    public Parser(List<Token> tokens) {
         this.tokens = tokens;
         this.ifParser = new IfParser(this);
         this.whileParser = new WhileParser(this);
@@ -39,8 +41,7 @@ public class Parser {
         this.parseExpression = new ParserExpression(this);
         this.listExecute = new ListExecute(this);
         this.listParser = new ListParser(this);
-        this.mapExecute = new MapExecute(this);
-        this.table = table;
+
     }
 
     public List<Statement> parse() {
@@ -85,16 +86,13 @@ public class Parser {
             else if ("list".equals(keyword)) {
                 return listExecute.ParserListStatement();
             }
-            else if ("map".equals(keyword)) {  // Aqui, adicionamos o caso para o mapa
-                return mapExecute.ParserMapStatement();  // Usamos o MapParser
-            }
+
             return parseVariable.parseVariableDeclaration();
         }
 
         if (match(Token.TokenType.IDENTIFIER)) {
             return listParser.parseIdentifierStatement();
         }
-        System.out.println("Variáveis armazenadas: " + table.getAllVariables());
 
         throw new RuntimeException("Erro de sintaxe: declaração inválida em '" + tokens.get(pos).getValue() + "'");
     }

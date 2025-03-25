@@ -14,8 +14,6 @@ public class ListExecute {
 
     private final Parser parser;
     private final ParserExpression expression;
-
-
     public ListExecute(Parser parser) {
         this.parser = parser;
         this.expression = new ParserExpression(parser);

@@ -1,5 +1,7 @@
 MainBlock:
-  VariableDeclaration{name='x', type='int', value=15}
-  VariableDeclaration{name='z', type='int', value=null}
-  VariableAssignment{name 'z', value  10}
-  VariableDeclaration{name='mapa', type='map', value=MapExpression{{"index"="zero"}}}
+  VariableDeclaration{name='teste', type='list', value=ListExpression{
+  ["hallyson", 18, "developer"]}}
+  ListStatement{listName='teste', operation='add', arguments=["teste"]}
+  ListStatement{listName='teste', operation='get', arguments=[1]}
+  ListStatement{listName='teste', operation='size', arguments=[]}
+  ListStatement{listName='teste', operation='clear', arguments=[]}

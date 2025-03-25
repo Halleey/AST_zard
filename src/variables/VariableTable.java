@@ -25,8 +25,4 @@ public class VariableTable {
     public boolean hasVariable(String name) {
         return variables.containsKey(name);
     }
-
-    public Map<String, TypedValue> getAllVariables() {
-            return  new HashMap<>(variables);
-    }
 }
