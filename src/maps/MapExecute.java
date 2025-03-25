@@ -37,7 +37,7 @@ public class MapExecute {
             // Analisa os elementos chave-valor dentro do mapa
             while (!parser.match(Token.TokenType.DELIMITER) || !parser.tokens.get(parser.pos).getValue().equals("}")) {
                 Expression key = expression.parseExpression();
-                parser.consume(Token.TokenType.OPERATOR); // Consome o operador ':'
+                parser.consume(Token.TokenType.DELIMITER); // Consome o operador ':'
                 Expression value = expression.parseExpression();
                 elements.put(key, value);
 

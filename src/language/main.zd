@@ -2,6 +2,5 @@ main {
 int x = 15;
 int z;
 z = 10;
-map mapa;
-
+map mapa = {"index":"zero"};
 }

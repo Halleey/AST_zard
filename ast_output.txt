@@ -2,4 +2,4 @@ MainBlock:
   VariableDeclaration{name='x', type='int', value=15}
   VariableDeclaration{name='z', type='int', value=null}
   VariableAssignment{name 'z', value  10}
-  VariableDeclaration{name='mapa', type='map', value=MapExpression{{}}}
+  VariableDeclaration{name='mapa', type='map', value=MapExpression{{"index"="zero"}}}
