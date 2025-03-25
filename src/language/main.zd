@@ -1,5 +1,7 @@
 main {
-
-map mapa
+int x = 15;
+int z;
+z = 10;
+map mapa;
 
 }

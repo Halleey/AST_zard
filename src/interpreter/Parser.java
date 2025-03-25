@@ -27,9 +27,9 @@ public class Parser {
     private final ListExecute listExecute;
     private final ListParser listParser;
     private final MapExecute mapExecute;
+    private final VariableTable table;
 
-
-    public Parser(List<Token> tokens) {
+    public Parser(List<Token> tokens, VariableTable table) {
         this.tokens = tokens;
         this.ifParser = new IfParser(this);
         this.whileParser = new WhileParser(this);
@@ -40,6 +40,7 @@ public class Parser {
         this.listExecute = new ListExecute(this);
         this.listParser = new ListParser(this);
         this.mapExecute = new MapExecute(this);
+        this.table = table;
     }
 
     public List<Statement> parse() {
@@ -87,13 +88,13 @@ public class Parser {
             else if ("map".equals(keyword)) {  // Aqui, adicionamos o caso para o mapa
                 return mapExecute.ParserMapStatement();  // Usamos o MapParser
             }
-
             return parseVariable.parseVariableDeclaration();
         }
 
         if (match(Token.TokenType.IDENTIFIER)) {
             return listParser.parseIdentifierStatement();
         }
+        System.out.println("Variáveis armazenadas: " + table.getAllVariables());
 
         throw new RuntimeException("Erro de sintaxe: declaração inválida em '" + tokens.get(pos).getValue() + "'");
     }

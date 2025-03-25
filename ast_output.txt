@@ -1,9 +1,5 @@
 MainBlock:
-  VariableDeclaration{name='a', type='int', value=15}
-  VariableDeclaration{name='b', type='double', value=3.14}
-  VariableDeclaration{name='isReal', type='bool', value=true}
-  VariableDeclaration{name='texto', type='string', value="zard"}
-  PrintStatement{expression VariableReference{name  'texto'}}
-  PrintStatement{expression VariableReference{name  'isReal'}}
-  PrintStatement{expression VariableReference{name  'a'}}
-  PrintStatement{expression VariableReference{name  'b'}}
+  VariableDeclaration{name='x', type='int', value=15}
+  VariableDeclaration{name='z', type='int', value=null}
+  VariableAssignment{name 'z', value  10}
+  VariableDeclaration{name='mapa', type='map', value=MapExpression{{}}}
