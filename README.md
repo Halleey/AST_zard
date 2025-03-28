@@ -1,5 +1,8 @@
 # Zard
 
+** projeto descontinuado, possivel retorno no futuro em C/C++ **
+
+
 Zard é uma linguagem de programação baseada em Java, criada para fins de estudo e aprimoramento da lógica de programação. Seu objetivo é oferecer uma sintaxe simples e acessível, facilitando o aprendizado sobre a criação de linguagens e a estrutura de compiladores.
 
 ## ✨ Características Atuais
@@ -32,15 +35,7 @@ main {
 }
 ```
 
-## 🚀 Futuro da Zard
 
-A linguagem continuará recebendo melhorias para tornar-se mais robusta e versátil. Algumas das metas incluem:
-
-- 📌 **Suporte a Funções** (declaração e chamada de funções).
-- 📚 **Tipos de Dados Avançados** (**ex:** listas e mapas dinâmicos).
-- 🔧 **Sistema de Módulos e Importação de Código**.
-- 🛠 **Compilação para LLVM IR** para execução independente.
-- 🏗 **Criação de um compilador** para alcançar o sonhado Bootstrapping .
 
 ## 🔄 Melhorias em Desenvolvimento
 
